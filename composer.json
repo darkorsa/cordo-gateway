@@ -1,0 +1,37 @@
+{
+    "name": "darkorsa/cordo-gateway",
+    "description": "Gateway for API calls",
+    "license": "MIT",
+    "require": {
+        "cache/doctrine-adapter": "^1.0",
+        "http-interop/http-factory-guzzle": "^1.0",
+        "php-http/cache-plugin": "^1.7",
+        "php-http/discovery": "^1.7"
+    },
+    "require-dev": {
+        "nunomaduro/phpinsights": "^1.7",
+        "phpstan/phpstan": "^0.11.2",
+        "symfony/var-dumper": "^4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app",
+            "Cordo\\Gateway\\Core\\": "core"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "analyse": "phpstan analyse -l max -c phpstan.neon src tests",
+        "insights": "phpinsights -v",
+        "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src/",
+        "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src/"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
