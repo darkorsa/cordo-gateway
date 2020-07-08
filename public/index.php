@@ -3,9 +3,9 @@
 /**
  * Handling HTTP request
  */
-use Cordo\Core\UI\Http\Dispatcher;
-use Cordo\Core\UI\Http\Response\JsonResponse;
-use Cordo\Core\UI\Http\Middleware\ParsePutRequest;
+use Cordo\Gateway\Core\UI\Http\Dispatcher;
+use Cordo\Gateway\Core\UI\Http\Response\JsonResponse;
+use Cordo\Gateway\Core\UI\Http\Middleware\ParsePutRequest;
 
 require __DIR__ . '/../bootstrap/autoload.php';
 

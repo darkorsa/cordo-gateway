@@ -1,0 +1,4 @@
+.env
+vendor/
+logs/
+public_html/
