@@ -3,6 +3,7 @@
     "description": "Gateway for API calls",
     "license": "MIT",
     "require": {
+        "ext-redis": "^5.0",
         "cache/doctrine-adapter": "^1.0",
         "filp/whoops": "^2.3",
         "guzzlehttp/psr7": "^1.5",

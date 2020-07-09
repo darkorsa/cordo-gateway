@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "08a38768d4b11ad0a717d2b6f4869ddd",
+    "content-hash": "157f33174d3b31763bf81dbe42be1d22",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -6264,7 +6264,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "ext-redis": "^5.0"
+    },
     "platform-dev": [],
     "plugin-api-version": "1.1.0"
 }
