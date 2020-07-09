@@ -6,7 +6,7 @@ namespace Cordo\Gateway\Core\UI\Http\Response;
 
 use Psr\Http\Message\ResponseInterface;
 
-class JsonResponse implements \Cordo\Core\UI\ResponseInterface
+class JsonResponse implements \Cordo\Gateway\Core\UI\ResponseInterface
 {
     private $response;
 

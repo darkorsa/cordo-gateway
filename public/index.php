@@ -10,11 +10,14 @@ use Cordo\Gateway\Core\UI\Http\Middleware\ParsePutRequest;
 require __DIR__ . '/../bootstrap/autoload.php';
 
 // bootstapping
-$container = require_once __DIR__ . '/../bootstrap/app.php';
+$container = require __DIR__ . '/../bootstrap/app.php';
 
 // router
 $router = $container->get('router');
 $router->addMiddleware(new ParsePutRequest());
+
+// register routes
+(new App\MessageRoutes($router, $container))->register();
 
 // dispatch request
 $dispatcher = new Dispatcher(FastRoute\simpleDispatcher($router->routes()), $container);

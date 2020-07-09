@@ -1,8 +1,7 @@
 <?php
 
-use App\Register;
 use DI\ContainerBuilder;
-use Cordo\Core\SharedKernel\Enum\Env;
+use Cordo\Gateway\Core\SharedKernel\Enum\Env;
 use Symfony\Component\Dotenv\Dotenv;
 use Cordo\Core\Infractructure\Mailer\ZendMail\MailerFactory;
 
@@ -16,7 +15,7 @@ $errorReporter = require __DIR__ . '/error.php';
  * @var $container Psr\Container\ContainerInterface
  */
 $containerBuilder = new ContainerBuilder();
-$containerBuilder->addDefinitions(Register::registerDefinitions());
+$containerBuilder->addDefinitions(include root_path() . 'bootstrap/definitions.php');
 $containerBuilder->useAutowiring(true);
 
 if (env('APP_ENV') == Env::PRODUCTION()) {
@@ -25,12 +24,5 @@ if (env('APP_ENV') == Env::PRODUCTION()) {
 
 $container = $containerBuilder->build();
 $container->set('error_reporter', $errorReporter);
-
-// Configs
-Register::registerConfigs($container->get('config'));
-
-// Mailer
-$mailer = MailerFactory::factory($container->get('config')->get('mail'));
-$container->set('mailer', $mailer);
 
 return $container;
