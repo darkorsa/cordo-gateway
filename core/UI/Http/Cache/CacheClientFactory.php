@@ -22,7 +22,7 @@ class CacheClientFactory
     private static function redisDriver(): DoctrineCachePool
     {
         $client = new Redis();
-        $client->connect('127.0.0.1', (int) env('REDIS_PORT'));
+        $client->connect(env('REDIS_SERVER'), (int) env('REDIS_PORT'));
 
         $cacheDriver = new RedisCache();
         $cacheDriver->setRedis($client);

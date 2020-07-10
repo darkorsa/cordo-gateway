@@ -1,10 +1,9 @@
 <?php
 
-/**
- * Handling HTTP request
- */
 use Cordo\Gateway\Core\UI\Http\Dispatcher;
+use Cordo\Gateway\Core\UI\Http\Middleware\ApiKeyMiddleware;
 use Cordo\Gateway\Core\UI\Http\Response\JsonResponse;
+use LosMiddleware\RateLimit\RateLimitMiddlewareFactory;
 use Cordo\Gateway\Core\UI\Http\Middleware\ParsePutRequest;
 
 require __DIR__ . '/../bootstrap/autoload.php';
@@ -14,6 +13,8 @@ $container = require __DIR__ . '/../bootstrap/app.php';
 
 // router
 $router = $container->get('router');
+$router->addMiddleware(new ApiKeyMiddleware());
+$router->addMiddleware((new RateLimitMiddlewareFactory())($container));
 $router->addMiddleware(new ParsePutRequest());
 
 // register routes
