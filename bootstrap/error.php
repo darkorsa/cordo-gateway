@@ -14,6 +14,7 @@ use Cordo\Gateway\Core\Application\Error\ErrorReporter;
 use Cordo\Gateway\Core\Application\Error\Handler\EmailErrorHandler;
 use Cordo\Gateway\Core\Application\Error\Handler\LoggerErrorHandler;
 use Cordo\Gateway\Core\Application\Error\Handler\PrettyErrorHandler;
+use Cordo\Gateway\Core\Infractructure\Mailer\ZendMail\MailerFactory;
 
 $errorReporter = new ErrorReporter();
 
@@ -39,7 +40,15 @@ if ($debug) {
 
     $errorReporter->pushHandler(new PrettyErrorHandler($whoops));
 } else {
-    $errorReporter->pushHandler(new EmailErrorHandler());
+    $mail = require root_path() . 'config/mail.php';
+    $error  = require root_path() . 'config/error.php';
+
+    $emailHandler = new EmailErrorHandler(
+        MailerFactory::factory($mail),
+        $mail['from'],
+        $error['error_reporting_emails']
+    );
+    $errorReporter->pushHandler($emailHandler);
 }
 
 // set php error handlers
