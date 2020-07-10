@@ -6,6 +6,7 @@
         "ext-redis": "^5.0",
         "cache/doctrine-adapter": "^1.0",
         "filp/whoops": "^2.3",
+        "guzzlehttp/guzzle": "^7.0",
         "guzzlehttp/psr7": "^1.5",
         "hassankhan/config": "^2.0",
         "http-interop/http-factory-guzzle": "^1.0",

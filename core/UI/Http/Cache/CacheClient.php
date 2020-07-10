@@ -22,7 +22,7 @@ class CacheClient
 
     public function sendRequest(
         ServerRequestInterface $request,
-        string $endpoint,
+        string $url,
         array $headers,
         array $options
     ): ResponseInterface {
@@ -33,13 +33,11 @@ class CacheClient
             [$cachePlugin]
         );
 
-        return $pluginClient->sendRequest($this->createRequest($request, $endpoint, $headers));
+        return $pluginClient->sendRequest($this->createRequest($request, $url, $headers));
     }
 
-    private function createRequest(ServerRequestInterface $request, string $endpoint, array $headers): Request
+    private function createRequest(ServerRequestInterface $request, string $url, array $headers): Request
     {
-        $url = $endpoint . '?' . http_build_query($request->getQueryParams());
-
         return new Request($request->getMethod(), $url, $headers);
     }
 }

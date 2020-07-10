@@ -3,7 +3,6 @@
 use DI\ContainerBuilder;
 use Cordo\Gateway\Core\SharedKernel\Enum\Env;
 use Symfony\Component\Dotenv\Dotenv;
-use Cordo\Core\Infractructure\Mailer\ZendMail\MailerFactory;
 
 $dotenv = new Dotenv();
 $dotenv->load(root_path() . '.env');

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
-use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Cordo\Gateway\Core\Application\Service\Register\RoutesRegister;
 
@@ -15,10 +15,9 @@ class MessageRoutes extends RoutesRegister
         $this->router->addRoute(
             'GET',
             "/",
-            function (ServerRequestInterface $request, array $params) {
-                return new Response(200, [], (string) json_encode([
-                    'response' => 'Welcome to Cordo microframework. Enjoy your API development!'
-                ]));
+            function (ServerRequestInterface $request, array $params): ResponseInterface {
+                return $this->cacheRequest($request, 'http://cordo-dev.test/', 10, []);
+                //return $this->sendRequest($request, 'http://cordo-dev.test/', []);
             }
         );
     }
