@@ -21,12 +21,15 @@ abstract class RoutesRegister
 
     protected $container;
 
+    protected $apiUrl;
+
     protected $config;
 
-    public function __construct(Router $router, ContainerInterface $container)
+    public function __construct(Router $router, ContainerInterface $container, string $apiUrl)
     {
         $this->router = $router;
         $this->container = $container;
+        $this->apiUrl = $apiUrl;
         $this->config = $container->get('config');
     }
 
@@ -83,7 +86,7 @@ abstract class RoutesRegister
             ? '?' . http_build_query($request->getQueryParams())
             : '';
 
-        return $endpoint . $queryParams;
+        return $this->apiUrl . $endpoint . $queryParams;
     }
 
     abstract public function register(): void;
