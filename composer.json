@@ -41,6 +41,8 @@
             "Tests\\": "tests"
         }
     },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "scripts": {
         "test": "phpunit",
         "analyse": "phpstan analyse -l max -c phpstan.neon app core tests",
