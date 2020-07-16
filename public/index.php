@@ -17,8 +17,8 @@ $router->addMiddleware(new ApiKeyMiddleware());
 $router->addMiddleware((new RateLimitMiddlewareFactory())($container));
 $router->addMiddleware(new ParsePutRequest());
 
-// register routes
-(new App\MessageRoutes($router, $container))->register();
+// register routes here
+// ...
 
 // dispatch request
 $dispatcher = new Dispatcher(FastRoute\simpleDispatcher($router->routes()), $container);
