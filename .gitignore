@@ -1,4 +1,6 @@
 .env
 vendor/
 logs/
-public_html/
+public_html
+apidoc/
+composer.phar
