@@ -12,8 +12,15 @@ class ApiKeyMiddleware implements MiddlewareInterface
 {
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if (current($request->getHeader('X-Api-Key')) !== env('API_KEY')) {
+        $xApiKey = current($request->getHeader('X-Api-Key'));
+        
+        if (!in_array($xApiKey, [env('API_KEY') , env('DEV_API_KEY')])) {
             return new Response('401', [], 'Invalid Api Key');
+        }
+
+        // disable cache for dev env
+        if ($xApiKey === env('DEV_API_KEY')) {
+            $request = $request->withAttribute('cache', false);
         }
 
         return $handler->handle($request);
