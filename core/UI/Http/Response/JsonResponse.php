@@ -19,19 +19,32 @@ class JsonResponse implements \Cordo\Gateway\Core\UI\ResponseInterface
     {
         http_response_code($this->response->getStatusCode());
 
-        header("Content-Type:application/json");
-        header("charset:utf-8");
-
         // additional headers
-        foreach ($this->response->getHeaders() as $key => $val) {
-            header("{$key}:{" . current($val) . "}");
+        foreach ($this->filterHeaders($this->response->getHeaders()) as $key => $val) {
+            header("$key: " . current($val) . "");
         }
 
         $body = (string) $this->response->getBody();
 
         echo $this->isJson($body) ? $body : json_encode($body);
-
         exit;
+    }
+
+    private function filterHeaders(array $headers): array
+    {
+        $blockList = [
+            'server',
+            'set-cookie',
+            'date',
+            'content-encoding',
+            'cache-control',
+            'x-powered-by',
+            'connection',
+        ];
+
+        return array_filter($headers, static function ($key) use ($blockList) {
+            return !in_array($key, $blockList);
+        }, ARRAY_FILTER_USE_KEY);
     }
 
     private function isJson(string $string): bool

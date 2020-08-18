@@ -12,8 +12,6 @@ use Psr\Http\Message\ResponseInterface;
 
 class Dispatcher
 {
-    private const OPTIONS_METHOD = 3;
-
     private $dispatcher;
 
     private $container;
@@ -35,8 +33,6 @@ class Dispatcher
                 return new Response(404);
             case FRDispatcher::METHOD_NOT_ALLOWED:
                 return new Response(404);
-            case self::OPTIONS_METHOD:
-                return new Response(200);
             case FRDispatcher::FOUND:
                 [$state, $handler, $vars] = $routeInfo;
 
@@ -54,10 +50,6 @@ class Dispatcher
 
     private function makeDispatch(ServerRequestInterface $request)
     {
-        if ($request->getMethod() === 'OPTIONS') {
-            return [self::OPTIONS_METHOD];
-        }
-
         return $this->dispatcher->dispatch($request->getMethod(), $request->getUri()->getPath());
     }
 }

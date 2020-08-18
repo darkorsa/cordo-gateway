@@ -21,7 +21,8 @@
         "php-http/discovery": "^1.7",
         "psr/http-server-middleware": "^1.0",
         "relay/relay": "^2.1",
-        "symfony/dotenv": "^5.0"
+        "symfony/dotenv": "^5.0",
+        "tuupola/cors-middleware": "^1.1"
     },
     "require-dev": {
         "nunomaduro/phpinsights": "^1.7",
