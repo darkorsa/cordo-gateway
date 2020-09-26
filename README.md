@@ -23,22 +23,19 @@ Most common use cases:
 
 - PHP 7.4.0 or newer
 - Apache/Nginx
-- PHP Memcached extension (used for rate limiting)
-- PHP Redis extension (used for request caching)
+- PHP Redis extension (nosql db for for request caching and rate limiting)
 
 ## Install
 
-First make sure that you have *Memcached* and *Redis* expansions installed. To check it run:
+First make sure that you have *Redis* expansions installed. To check it run:
 
 ``` bash
 $ php -i |grep redis
-$ php -i |grep memcached
 ```
 If any of them is missing you can install it from [PECL](https://pecl.php.net/) repository:
 
 ``` bash
 $ sudo pecl install redis
-$ sudo pecl install memcached
 
 # restart PHP
 $ sudo service php7.4-fpm restart

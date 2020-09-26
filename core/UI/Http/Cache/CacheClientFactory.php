@@ -2,10 +2,8 @@
 
 namespace Cordo\Gateway\Core\UI\Http\Cache;
 
-use Redis;
 use Exception;
-use Doctrine\Common\Cache\RedisCache;
-use Cache\Adapter\Doctrine\DoctrineCachePool;
+use Cordo\Gateway\Core\Infractructure\Persistance\Doctrine\Cache\CachePoolFactory;
 
 class CacheClientFactory
 {
@@ -13,20 +11,9 @@ class CacheClientFactory
     {
         switch ($driver) {
             case 'redis':
-                return new CacheClient(self::redisDriver());
+                return new CacheClient(CachePoolFactory::create('redis'));
             default:
                 throw new Exception('Unknown cache driver ' . $driver);
         }
-    }
-
-    private static function redisDriver(): DoctrineCachePool
-    {
-        $client = new Redis();
-        $client->connect(env('REDIS_SERVER'), (int) env('REDIS_PORT'));
-
-        $cacheDriver = new RedisCache();
-        $cacheDriver->setRedis($client);
-
-        return new DoctrineCachePool($cacheDriver);
     }
 }
