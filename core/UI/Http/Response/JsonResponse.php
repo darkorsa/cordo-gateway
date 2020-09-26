@@ -40,10 +40,11 @@ class JsonResponse implements \Cordo\Gateway\Core\UI\ResponseInterface
             'cache-control',
             'x-powered-by',
             'connection',
+            'transfer-encoding',
         ];
 
         return array_filter($headers, static function ($key) use ($blockList) {
-            return !in_array($key, $blockList);
+            return !in_array(strtolower($key), $blockList);
         }, ARRAY_FILTER_USE_KEY);
     }
 
