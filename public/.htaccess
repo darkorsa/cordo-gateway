@@ -4,6 +4,12 @@
     </IfModule>
     RewriteEngine On
 
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(imagecache/.*) imagecache.php/$1 [L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule \.(jpg|jpeg|png|gif|ico|swf|bmp)$ - [NC,R=404,L]
+
     # Redirect Trailing Slashes...
     RewriteRule ^(.*)/$ /$1 [L,R=301]
     
