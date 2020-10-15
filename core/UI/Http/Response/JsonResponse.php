@@ -6,7 +6,7 @@ namespace Cordo\Gateway\Core\UI\Http\Response;
 
 use Psr\Http\Message\ResponseInterface;
 
-class JsonResponse implements \Cordo\Gateway\Core\UI\ResponseInterface
+class JsonResponse
 {
     private $response;
 
@@ -15,7 +15,7 @@ class JsonResponse implements \Cordo\Gateway\Core\UI\ResponseInterface
         $this->response = $response;
     }
 
-    public function send(): void
+    public function __invoke(): void
     {
         http_response_code($this->response->getStatusCode());
 

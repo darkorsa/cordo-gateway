@@ -1,45 +1,49 @@
 <?php
 
+use Cordo\Gateway\Core\UI\Http\Middleware\ImageCacheMiddleware;
 use Middlewares\Reader;
 use Middlewares\Writer;
 use Middlewares\Utils\Dispatcher;
 use GuzzleHttp\Psr7\ServerRequest;
 use Middlewares\ImageManipulation;
+use Symfony\Component\Dotenv\Dotenv;
+use Cordo\Gateway\Core\UI\Http\Response\ImageResponse;
 
 require __DIR__ . '/../bootstrap/autoload.php';
 
-//You need a signature key
-$key = 'sdf6&-$<@#asf';
+$dotenv = new Dotenv();
+$dotenv->load(root_path() . '.env');
 
-//Manipulated images directory
+// Signature key
+$key = env('IMAGE_CACHE_SECRET');
+
+// Manipulated images directory
 $cachePath = storage_path() . 'cache';
 
-//Original images directory
+// Original images directory
 $imagePath = storage_path();
 
-dd(ServerRequest::fromGlobals());
-
 $dispatcher = new Dispatcher([
-    //read and returns the manipulated image if it's currently cached
+    // convert seo friendly image naming convention to format accepted by ImageManipulation class
+    new ImageCacheMiddleware($key),
+
+    // read and returns the manipulated image if it's currently cached
     Reader::createFromDirectory($cachePath)->continueOnError(),
 
-    //saves the manipulated images returned by the next middleware
+    // saves the manipulated images returned by the next middleware
     Writer::createFromDirectory($cachePath),
 
-    //transform the image
+    // transform the image
     new ImageManipulation($key),
 
-    //read and return a response with original image if exists
+    // read and return a response with original image if exists
     Reader::createFromDirectory($imagePath)->continueOnError(),
 ]);
 
-$response = $dispatcher->dispatch(ServerRequest::fromGlobals());
+$request = ServerRequest::fromGlobals();
+$response = $dispatcher->dispatch($request);
 
-$metadata = $response->getBody()->getMetadata();
-$pathParts = pathinfo($metadata['uri']);
+$pathParts = pathinfo($request->getUri()->getPath());
 
-header('Content-Type:' . "image/{$pathParts['extension']}");
-header('Content-Length: ' . $response->getBody()->getSize());
-
-echo (string) $response->getBody();
-exit;
+$imageResponse = new ImageResponse($response);
+$imageResponse((int) $response->getBody()->getSize(), $pathParts['extension']);

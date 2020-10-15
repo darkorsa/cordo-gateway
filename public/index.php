@@ -34,4 +34,4 @@ $router->addRoute(
 $dispatcher = new Dispatcher(FastRoute\simpleDispatcher($router->routes()), $container);
 
 $response = new JsonResponse($dispatcher->dispatch($container->get('request')));
-$response->send();
+$response();
