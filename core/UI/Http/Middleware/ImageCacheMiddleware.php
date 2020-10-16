@@ -19,7 +19,7 @@ class ImageCacheMiddleware implements MiddlewareInterface
 
     public static function getUri(string $path, string $transform, string $signatureKey): string
     {
-        $hash = hash("adler32", "{$transform}+{$signatureKey}", false);
+        $hash = self::hash("{$transform}+{$signatureKey}");
         $encoded = trim(base64_encode("{$transform}||" . $hash), '=');
 
         $pathInfo = pathinfo($path);
@@ -37,8 +37,8 @@ class ImageCacheMiddleware implements MiddlewareInterface
         $uri = $request->getUri();
         $path = $uri->getPath();
 
-        [$hash, $image] = $this->extractHashAndImage($path);
-        [$transform, $secret] = $this->decodeHash($hash);
+        [$encoded, $image] = $this->extractEncodedAndImage($path);
+        [$transform, $secret] = $this->decode($encoded);
 
         $this->validateSecret($transform, $secret);
 
@@ -53,7 +53,7 @@ class ImageCacheMiddleware implements MiddlewareInterface
         return $handler->handle($request->withUri($uri->withPath($newPath)));
     }
 
-    private function extractHashAndImage(string $path): array
+    private function extractEncodedAndImage(string $path): array
     {
         if (!$hash = strstr(substr(strrchr($path, '-'), 1), '.', true)) {
             throw new Exception('Invalid image path');
@@ -67,14 +67,19 @@ class ImageCacheMiddleware implements MiddlewareInterface
         ];
     }
 
-    private function decodeHash(string $hash): array
+    private function decode(string $encoded): array
     {
-        return explode('||', base64_decode($hash));
+        return explode('||', base64_decode($encoded));
+    }
+
+    private static function hash(string $string): string
+    {
+        return substr(sha1($string), 0, 8);
     }
 
     private function validateSecret(string $transform, string $secret): void
     {
-        if (hash("adler32", $transform . '+' . $this->signatureKey, false) !== $secret) {
+        if (self::hash("{$transform}+{$this->signatureKey}") !== $secret) {
             throw new Exception('Invalid image cache secret');
         }
     }
