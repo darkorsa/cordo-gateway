@@ -5,7 +5,7 @@
     RewriteEngine On
 
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(images/.*) imagecache.php/$1 [L]
+    RewriteRule ^(imagecache/.*) imagecache.php/$1 [L]
 
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule \.(jpg|jpeg|png|gif|ico|swf|bmp)$ - [NC,R=404,L]

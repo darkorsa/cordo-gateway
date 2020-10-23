@@ -46,7 +46,7 @@ class LocalValetDriver extends LaravelValetDriver
     {
         $path = $sitePath . $this->site_folder;
 
-        if (strpos($uri, 'images')) {
+        if (strpos($uri, 'imagecache')) {
             return $sitePath . '/public/imagecache.php';
         }
 

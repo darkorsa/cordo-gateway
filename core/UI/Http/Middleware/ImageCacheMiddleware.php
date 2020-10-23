@@ -35,9 +35,9 @@ class ImageCacheMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $uri = $request->getUri();
-        $path = $uri->getPath();
+        $path = str_replace('/imagecache', '', $uri->getPath());
 
-        [$encoded, $image] = $this->extractEncodedAndImage($path);
+        [$encoded, $image] = $this->extractEncodedInfoAndImage($path);
         [$transform, $secret] = $this->decode($encoded);
 
         $this->validateSecret($transform, $secret);
@@ -53,7 +53,7 @@ class ImageCacheMiddleware implements MiddlewareInterface
         return $handler->handle($request->withUri($uri->withPath($newPath)));
     }
 
-    private function extractEncodedAndImage(string $path): array
+    private function extractEncodedInfoAndImage(string $path): array
     {
         if (!$hash = strstr(substr(strrchr($path, '-'), 1), '.', true)) {
             throw new Exception('Invalid image path');
