@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f2474fc01d0935bc0e575d0b02272057",
+    "content-hash": "539c821b0af7938e7109035196b52eb0",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -1626,6 +1626,58 @@
                 "rest"
             ],
             "time": "2019-12-31T15:45:41+00:00"
+        },
+        {
+            "name": "middlewares/client-ip",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/middlewares/client-ip.git",
+                "reference": "26259e0fd591fc1cd3180c0abaa9d1e22e3fed5f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/middlewares/client-ip/zipball/26259e0fd591fc1cd3180c0abaa9d1e22e3fed5f",
+                "reference": "26259e0fd591fc1cd3180c0abaa9d1e22e3fed5f",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "middlewares/utils": "^3.0",
+                "oscarotero/php-cs-fixer-config": "^1.0",
+                "phpunit/phpunit": "^8.1",
+                "squizlabs/php_codesniffer": "^3.0",
+                "zendframework/zend-diactoros": "^2.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Middlewares\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Middleware to detect the client ip and save it as a request attribute",
+            "homepage": "https://github.com/middlewares/client-ip",
+            "keywords": [
+                "IP",
+                "http",
+                "middleware",
+                "psr-15",
+                "psr-7",
+                "server"
+            ],
+            "support": {
+                "issues": "https://github.com/middlewares/client-ip/issues",
+                "source": "https://github.com/middlewares/client-ip/tree/master"
+            },
+            "time": "2019-12-03T00:18:25+00:00"
         },
         {
             "name": "middlewares/filesystem",
@@ -7628,5 +7680,5 @@
         "ext-redis": "^5.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }
