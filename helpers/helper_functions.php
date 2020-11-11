@@ -1,12 +1,16 @@
 <?php
 
-function env(string $index): string
+function env(string $index, ?string $default = null): ?string
 {
-    if (!array_key_exists($index, $_ENV)) {
-        throw new OutOfBoundsException("{$index} is not a valid key for .env variables.");
+    if ($default !== null) {
+        return $default;
     }
-    
-    return $_ENV[$index];
+
+    if (array_key_exists($index, $_ENV)) {
+        return $_ENV[$index];
+    }
+
+    return null;
 }
 
 function root_path(): string
