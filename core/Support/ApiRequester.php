@@ -1,27 +1,34 @@
 <?php
 
-namespace Cordo\Gateway\Core\UI\Http;
+declare(strict_types=1);
+
+namespace Cordo\Gateway\Core\Support;
 
 use Exception;
 use GuzzleHttp\Client;
+use Noodlehaus\Config;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Cordo\Gateway\Core\UI\Http\Cache\CacheClient;
 use Cordo\Gateway\Core\UI\Http\Cache\CacheClientFactory;
-use Noodlehaus\Config;
 
-class Controller
+class ApiRequester
 {
     private $apiUrl;
 
     private $config;
-    
+
+    private $client;
+
+    private $cacheClient;
+
     public function __construct(string $apiUrl, Config $config)
     {
         $this->apiUrl = $apiUrl;
         $this->config = $config;
     }
-    
+
     public function cacheRequest(
         ServerRequestInterface $request,
         string $endpoint,
@@ -45,7 +52,7 @@ class Controller
             'methods' => ['GET', 'HEAD'],
         ], $options);
 
-        return CacheClientFactory::create('redis')->sendRequest(
+        return $this->getCacheClient()->sendRequest(
             $request,
             $this->buildUrl($request, $endpoint),
             $headers,
@@ -70,7 +77,35 @@ class Controller
             'http_errors' => false,
         ], $options);
 
-        return (new Client())->send($newRequest, $options);
+        return $this->getClient()->send($newRequest, $options);
+    }
+
+    /**
+     * Lazy load cache client and prevent creating multiple instances
+     *
+     * @return CacheClient
+     */
+    private function getCacheClient(): CacheClient
+    {
+        if (!$this->cacheClient) {
+            $this->cacheClient = CacheClientFactory::create($this->config->get('cache.cache_driver'));
+        }
+
+        return $this->cacheClient;
+    }
+
+    /**
+     * Lazy load client and prevent creating multiple instances
+     *
+     * @return Client
+     */
+    private function getClient(): Client
+    {
+        if (!$this->client) {
+            $this->client = new Client();
+        }
+
+        return $this->client;
     }
 
     private function buildUrl(ServerRequestInterface $request, string $endpoint)

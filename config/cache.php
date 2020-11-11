@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'cache_driver' => 'redis',
     'cache_lifetime' => 86400 * 365, // one year
     // redis
     'redis_server' => env('REDIS_SERVER'),

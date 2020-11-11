@@ -6,7 +6,7 @@ namespace App\Example;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Cordo\Gateway\Core\Application\Service\Register\RoutesRegister;
+use Cordo\Gateway\Core\UI\Http\RoutesRegister;
 
 class Quotes extends RoutesRegister
 {
@@ -18,7 +18,7 @@ class Quotes extends RoutesRegister
             'GET',
             "/{$this->namespace}/quote",
             function (ServerRequestInterface $request, array $params): ResponseInterface {
-                return $this->controller->cacheRequest($request, '/qod', self::CACHE_TTL, []);
+                return $this->apiRequester->cacheRequest($request, '/qod', self::CACHE_TTL, []);
             }
         );
     }
