@@ -37,7 +37,7 @@ $dispatcher = new Dispatcher([
     new ImageManipulation($key),
 
     // read and return a response with original image if exists
-    Reader::createFromDirectory($imagePath)->continueOnError(),
+    Reader::createFromDirectory($imagePath)->continueOnError(false),
 ]);
 
 $request = ServerRequest::fromGlobals();
@@ -46,4 +46,4 @@ $response = $dispatcher->dispatch($request);
 $pathParts = pathinfo($request->getUri()->getPath());
 
 $imageResponse = new ImageResponse($response);
-$imageResponse((int) $response->getBody()->getSize(), $pathParts['extension']);
+$imageResponse((int) $response->getBody()->getSize(), $pathParts['extension'], 60 * 60 * 24);
