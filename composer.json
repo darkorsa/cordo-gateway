@@ -7,7 +7,7 @@
         "cache/doctrine-adapter": "^1.0",
         "filp/whoops": "^2.3",
         "guzzlehttp/guzzle": "^7.0",
-        "guzzlehttp/psr7": "^1.5",
+        "guzzlehttp/psr7": "^1.7",
         "hassankhan/config": "^2.0",
         "http-interop/http-factory-guzzle": "^1.0",
         "laminas/laminas-mail": "^2.10",
@@ -57,6 +57,9 @@
         "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 app/"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "7.4"
+        }
     }
 }
