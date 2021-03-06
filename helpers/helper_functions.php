@@ -1,39 +1,51 @@
 <?php
 
-function env(string $index, ?string $default = null): ?string
+function env(string $key, $default = null)
 {
-    if ($default !== null) {
+    $value = $_ENV[$key] ?? false;
+
+    if ($value === false) {
         return $default;
     }
 
-    if (array_key_exists($index, $_ENV)) {
-        return $_ENV[$index];
+    switch (strtolower($value)) {
+        case 'true':
+            return true;
+        case 'false':
+            return false;
+        case 'null':
+            return null;
     }
 
-    return null;
+    return $value;
 }
 
-function root_path(): string
+function root_path(string $path = null): string
 {
-    return __DIR__ . '/../';
+    return realpath(__DIR__ . '/..') . '/' . $path;
 }
 
-function app_path(): string
+function app_path(string $path = null): string
 {
-    return __DIR__ . '/../app/';
+    return realpath(__DIR__ . '/../app') . '/' . $path;
 }
 
-function config_path(): string
+function config_path(string $path = null): string
 {
-    return __DIR__ . '/../config/';
+    return realpath(__DIR__ . '/../config') . '/' . $path;
 }
 
-function storage_path(): string
+function storage_path(string $path = null): string
 {
-    return __DIR__ . '/../storage/';
+    return realpath(__DIR__ . '/../storage') . '/' . $path;
 }
 
-function vendor_path(): string
+function resources_path(string $path = null): string
 {
-    return __DIR__ . '/../vendor/';
+    return realpath(__DIR__ . '/../resources') . '/' . $path;
+}
+
+function vendor_path(string $path = null): string
+{
+    return realpath(__DIR__ . '/../vendor') . '/' . $path;
 }
