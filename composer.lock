@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "588a8184621e55687eb2f8c268a281bf",
+    "content-hash": "b04e13c3fadd9ea9d490d0be2c1ec878",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -2779,6 +2779,55 @@
                 "promise"
             ],
             "time": "2020-07-07T09:29:14+00:00"
+        },
+        {
+            "name": "php-middleware/log-http-messages",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-middleware/log-http-messages.git",
+                "reference": "3c1b0bf70fbbbdd39944a047bafffce0dd98d573"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-middleware/log-http-messages/zipball/3c1b0bf70fbbbdd39944a047bafffce0dd98d573",
+                "reference": "3c1b0bf70fbbbdd39944a047bafffce0dd98d573",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0",
+                "psr/http-message": "^1.0",
+                "psr/http-server-handler": "^1.0",
+                "psr/http-server-middleware": "^1.0",
+                "psr/log": "^1.0",
+                "zendframework/zend-diactoros": "^1.4 || ^2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhpMiddleware\\LogHttpMessages\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "PSR-15 middleware for log PSR-7 HTTP messages using PSR-3 logger",
+            "keywords": [
+                "debug",
+                "log",
+                "logger",
+                "middleware",
+                "psr",
+                "psr-15",
+                "psr-3",
+                "psr-7"
+            ],
+            "support": {
+                "issues": "https://github.com/php-middleware/log-http-messages/issues",
+                "source": "https://github.com/php-middleware/log-http-messages/tree/master"
+            },
+            "time": "2018-11-17T10:14:08+00:00"
         },
         {
             "name": "psr/cache",
@@ -7684,5 +7733,8 @@
         "ext-redis": "^5.0"
     },
     "platform-dev": [],
+    "platform-overrides": {
+        "php": "7.4"
+    },
     "plugin-api-version": "2.0.0"
 }

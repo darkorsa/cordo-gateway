@@ -22,6 +22,7 @@
         "php-http/cache-plugin": "^1.7",
         "php-http/curl-client": "^2.1",
         "php-http/discovery": "^1.7",
+        "php-middleware/log-http-messages": "^4.0",
         "psr/http-server-middleware": "^1.0",
         "relay/relay": "^2.1",
         "rollbar/rollbar": "^2.1",
