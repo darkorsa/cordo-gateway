@@ -55,7 +55,7 @@ class ImageCacheMiddleware implements MiddlewareInterface
 
     private function extractEncodedInfoAndImage(string $path): array
     {
-        if (!$hash = strstr(substr(strrchr($path, '-'), 1), '.', true)) {
+        if (!$hash = strstr(substr((string)  strrchr($path, '-'), 1), '.', true)) {
             throw new Exception('Invalid image path');
         }
 
@@ -69,7 +69,7 @@ class ImageCacheMiddleware implements MiddlewareInterface
 
     private function decode(string $encoded): array
     {
-        return explode('||', base64_decode($encoded));
+        return explode('||', (string) base64_decode($encoded));
     }
 
     private static function hash(string $string): string

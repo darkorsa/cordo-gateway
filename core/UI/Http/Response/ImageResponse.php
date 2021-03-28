@@ -15,11 +15,11 @@ class ImageResponse
         $this->response = $response;
     }
 
-    public function __invoke(int $size, string $extension, int $ttl = null): void
+    public function __invoke(int $size, string $contentType, int $ttl = null): void
     {
         http_response_code($this->response->getStatusCode());
 
-        header('Content-Type:' . "image/{$extension}");
+        header('Content-Type:' . "{$contentType}");
         header('Content-Length: ' . $size);
 
         if ($ttl && $this->response->getStatusCode() == 200) {

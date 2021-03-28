@@ -41,9 +41,9 @@ $dispatcher = new Dispatcher([
 ]);
 
 $request = ServerRequest::fromGlobals();
-$response = $dispatcher->dispatch($request);
+$response = $dispatcher->dispatch($request->withHeader('Accept', 'image/*'));
 
-$pathParts = pathinfo($request->getUri()->getPath());
+$contentType = get_mime_type($request->getUri()->getPath());
 
 $imageResponse = new ImageResponse($response);
-$imageResponse((int) $response->getBody()->getSize(), $pathParts['extension'], 60 * 60 * 24);
+$imageResponse((int) $response->getBody()->getSize(), $contentType, 60 * 60 * 24);

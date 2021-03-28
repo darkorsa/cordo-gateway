@@ -40,7 +40,8 @@
             "Cordo\\Gateway\\Core\\": "core"
         },
         "files": [
-            "helpers/helper_functions.php"
+            "helpers/paths.php",
+            "helpers/files.php"
         ]
     },
     "autoload-dev": {
@@ -52,7 +53,7 @@
     "prefer-stable": true,
     "scripts": {
         "test": "phpunit",
-        "analyse": "phpstan analyse -l max -c phpstan.neon app core tests",
+        "analyse": "phpstan analyse -l max -c phpstan.neon app core",
         "insights": "phpinsights -v",
         "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 app/",
         "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 app/"
