@@ -68,16 +68,47 @@ class ApiRequester
     ): ResponseInterface {
         $newRequest = new Request($request->getMethod(), $this->buildUrl($request, $endpoint), $headers);
 
-        if (in_array($request->getMethod(), ['POST', 'PUT'])) {
-            $options['form_params'] = $request->getParsedBody();
-        }
+        return $this->getClient()->send($newRequest, $this->setRequestOptions($request, $options));
+    }
 
-        // options
+    private function setRequestOptions(ServerRequestInterface $request, array $options): array
+    {
         $options = array_merge([
             'http_errors' => false,
         ], $options);
+        
+        if (!in_array($request->getMethod(), ['POST', 'PUT'])) {
+            return $options;
+        }
 
-        return $this->getClient()->send($newRequest, $options);
+        if (array_key_exists('json', $options)) {
+            return $options;
+        }
+
+        if (!empty($request->getUploadedFiles())) {
+            $multipart = [];
+            foreach ($request->getUploadedFiles() as $name => $file) {
+                $multipart[] = [
+                    'name' => $name,
+                    'contents' => $file->getStream(),
+                    'filename' => $file->getClientFilename(),
+                    'headers' => [
+                        'Content-Type' => $file->getClientMediaType(),
+                    ],
+                ];
+            }
+            foreach ((array) $request->getParsedBody() as $name => $contents) {
+                $multipart[] = [
+                    'name' => $name,
+                    'contents' => $contents,
+                ];
+            }
+            $options['multipart'] = $multipart;
+        } else {
+            $options['form_params'] = $request->getParsedBody();
+        }
+
+        return $options;
     }
 
     /**
