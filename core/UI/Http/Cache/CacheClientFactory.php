@@ -3,7 +3,7 @@
 namespace Cordo\Gateway\Core\UI\Http\Cache;
 
 use Exception;
-use Cordo\Gateway\Core\Infractructure\Persistance\Doctrine\Cache\CachePoolFactory;
+use Cordo\Gateway\Core\Infractructure\Persistance\Cache\CachePoolFactory;
 
 class CacheClientFactory
 {

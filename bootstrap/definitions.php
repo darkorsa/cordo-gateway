@@ -12,7 +12,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Cordo\Gateway\Core\Application\Config\Parser;
 use Mezzio\ProblemDetails\ProblemDetailsResponseFactory;
 use Cordo\Gateway\Core\Application\Error\ErrorReporterInterface;
-use Cordo\Gateway\Core\Infractructure\Persistance\Doctrine\Cache\CachePoolFactory;
+use Cordo\Gateway\Core\Infractructure\Persistance\Cache\CachePoolFactory;
 
 return [
     'config' => DI\factory(static function () {

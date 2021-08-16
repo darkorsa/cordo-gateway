@@ -3,16 +3,16 @@
 namespace Cordo\Gateway\Core\UI\Http\Middleware;
 
 use GuzzleHttp\Psr7\Message;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Cache\Adapter\Doctrine\DoctrineCachePool;
-use Cordo\Gateway\Core\Infractructure\Persistance\Doctrine\Cache\CachePoolFactory;
+use Cordo\Gateway\Core\Infractructure\Persistance\Cache\CachePoolFactory;
 
 class CacheMiddleware implements MiddlewareInterface
 {
-    private DoctrineCachePool $cachePool;
+    private CacheItemPoolInterface $cachePool;
 
     /**
      * Cache lifetime in seconds

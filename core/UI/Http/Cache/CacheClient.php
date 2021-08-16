@@ -4,20 +4,20 @@ namespace Cordo\Gateway\Core\UI\Http\Cache;
 
 use GuzzleHttp\Psr7\Request;
 use Http\Client\Common\PluginClient;
+use Psr\Cache\CacheItemPoolInterface;
 use Http\Factory\Guzzle\StreamFactory;
 use Http\Discovery\HttpClientDiscovery;
 use Psr\Http\Message\ResponseInterface;
-use Http\Client\Common\Plugin\CachePlugin;
+use Cache\Taggable\TaggablePSR6PoolAdapter;
 use Psr\Http\Message\ServerRequestInterface;
-use Cache\Adapter\Doctrine\DoctrineCachePool;
 
 class CacheClient
 {
     private $cacheDriver;
 
-    public function __construct(DoctrineCachePool $cacheDriver)
+    public function __construct(CacheItemPoolInterface $cacheDriver)
     {
-        $this->cacheDriver = $cacheDriver;
+        $this->cacheDriver = TaggablePSR6PoolAdapter::makeTaggable($cacheDriver);
     }
 
     public function sendRequest(
@@ -26,12 +26,10 @@ class CacheClient
         array $headers,
         array $options
     ): ResponseInterface {
-        $cachePlugin = CachePlugin::serverCache($this->cacheDriver, new StreamFactory(), $options);
+        $cachePlugin = TaggableCachePlugin::serverCache($this->cacheDriver, new StreamFactory(), $options);
 
-        $pluginClient = new PluginClient(
-            HttpClientDiscovery::find(),
-            [$cachePlugin]
-        );
+        /** @phpstan-ignore-next-line */ 
+        $pluginClient = new PluginClient(HttpClientDiscovery::find(), [$cachePlugin]);
 
         return $pluginClient->sendRequest($this->createRequest($request, $url, $headers));
     }
